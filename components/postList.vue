@@ -1,14 +1,17 @@
 <template>
-    <div v-scroll="handle">
-      <post v-for="post in $store.state.posts.list" :post="post"></post>
-    </div>
+  <infinite-scroll @limit="loadPosts" :loading="this.$store.state.posts.isLoading">
+    <post v-for="post in $store.state.posts.list" :post="post"></post>
+  </infinite-scroll>
+
+
 </template>
 
 <script>
     import Post from "./post";
+    import InfiniteScroll from "./infiniteScroll";
     export default {
         name: "postList",
-        components: {Post},
+        components: {InfiniteScroll, Post},
         data(){
           return {
 
@@ -18,13 +21,8 @@
         this.$store.dispatch('posts/loadNextPosts');
       },
       methods: {
-        handle(evt, el){
-          let elHeight = el.clientHeight;
-          let pageBottom = evt.target.defaultView.innerHeight + evt.target.defaultView.scrollY;
-          let percentageScrolled = pageBottom * 100 / elHeight;
-          if(percentageScrolled > 90 && !this.$store.state.posts.isLoading){
-            this.$store.dispatch('posts/loadNextPosts');
-          }
+        loadPosts(){
+          this.$store.dispatch('posts/loadNextPosts');
         }
       }
     }
