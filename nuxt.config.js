@@ -7,6 +7,9 @@ export default {
   ** Headers of the page
   */
   head: {
+    htmlAttrs: {
+      class: 'has-navbar-fixed-top',
+    },
     title: pkg.name,
     meta: [
       { charset: 'utf-8' },
@@ -15,7 +18,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.css' },
+      //{ rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.css' },
     ]
   },
 
@@ -28,6 +31,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '@/assets/styles/app.scss'
   ],
 
   /*
@@ -43,7 +47,12 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/style-resources',
   ],
+  styleResources: {
+    // your settings here
+    sass: ['@/assets/styles/app.scss'], // alternative: scss
+  },
   /*
   ** Axios module configuration
   */

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div>
       <post v-for="post in posts" :post="post"></post>
     </div>
 </template>

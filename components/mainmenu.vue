@@ -1,14 +1,11 @@
 <template>
-  <aside class="menu">
-    <p class="menu-label">
-      General
-    </p>
-    <ul class="menu-list">
-      <li v-for="link in links">
-        <a :href="link.link" :class="{'is-active': routeActive(link.link)}">{{link.title}}</a>
-      </li>
-    </ul>
-  </aside>
+  <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a v-for="link in links" class="navbar-item" :href="link.link" :class="{'is-active': routeActive(link.link)}">{{link.title}}</a>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script>
