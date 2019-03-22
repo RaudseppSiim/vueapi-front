@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import PostList from "../components/postList";
+    import PostList from "../../components/postList";
     export default {
         name: "posts",
       components: {PostList}

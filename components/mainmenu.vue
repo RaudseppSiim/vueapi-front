@@ -2,7 +2,7 @@
   <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
-        <a v-for="link in links" class="navbar-item" :href="link.link" :class="{'is-active': routeActive(link.link)}">{{link.title}}</a>
+        <nuxt-link v-for="link in links" class="navbar-item" :to="link.link" :class="{'is-active': routeActive(link.link)}">{{link.title}}</nuxt-link>
       </div>
     </div>
   </nav>
@@ -15,7 +15,8 @@
           return {
             links: [
               {title: 'Index', link: '/'},
-              {title: 'Posts', link: '/posts'}
+              {title: 'Posts', link: '/posts'},
+              {title: 'List', link: '/posts/list'}
             ]
           }
       },

@@ -49,6 +49,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/style-resources',
+    '@nuxtjs/moment',
   ],
   styleResources: {
     // your settings here

@@ -16,7 +16,7 @@
           <p>{{post.content}}</p>
           <a href="#">#css</a> <a href="#">#responsive</a>
           <br>
-          <time datetime="2016-1-1">{{post.created_at}}</time>
+          <time :datetime="$moment(post.created_at).format()">{{$moment(post.created_at).fromNow()}}</time>
         </div>
       </div>
     </div>
