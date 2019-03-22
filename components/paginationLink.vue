@@ -6,6 +6,7 @@
       :aria-label="'Goto page ' + page"
       :aria-current="{page: current}"
       :class="{'is-current': current}"
+      @click="$emit('clicked')"
     >{{page}}</a>
     <span
       v-if="page === '...'"
