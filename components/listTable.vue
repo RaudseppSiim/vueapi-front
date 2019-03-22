@@ -1,11 +1,13 @@
 <template>
   <table class="table is-bordered is-hoverable is-striped">
     <thead>
-    <td v-for="key in keys">{{key}}</td>
+    <td v-for="key in keys">{{key.title}}</td>
+    <td v-if="actions">actions</td>
     </thead>
     <tbody>
     <tr v-for="object in objects">
-      <td  v-for="key in keys">{{object[key]}}</td>
+      <td v-for="key in keys">{{object[key.key]}}</td>
+      <td><div class="columns"><div v-for="action in actions" class="column"><button class="button" :class="action.color">{{action.title}}</button></div></div></td>
     </tr>
     </tbody>
   </table>
@@ -14,7 +16,7 @@
 <script>
     export default {
         name: "listTable",
-      props:['objects', 'keys'],
+      props:['objects', 'keys', 'actions'],
     }
 </script>
 

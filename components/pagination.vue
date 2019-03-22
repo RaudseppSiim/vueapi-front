@@ -2,8 +2,8 @@
   <div>
     <slot></slot>
     <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-      <a class="pagination-previous">Previous</a>
-      <a class="pagination-next">Next page</a>
+      <button class="pagination-previous" :disabled="isStartOfPage" @click="loadPreviousPage">Previous</button>
+      <button class="pagination-next" :disabled="isEndOfPage" @click="loadNextPage">Next page</button>
       <ul class="pagination-list">
         <pagination-link v-for="page in pageArray" :page="page" :current="pagination.current_page === page" @clicked="$emit('paging', page)"></pagination-link>
       </ul>
@@ -22,7 +22,25 @@
             default: 2
         }
       },
+      methods:{
+        loadNextPage() {
+          if (this.pagination.current_page !== this.pagination.last_page) {
+            this.$emit('paging', this.pagination.current_page + 1)
+          }
+        },
+        loadPreviousPage() {
+          if(this.pagination.current_page > 1){
+            this.$emit('paging', this.pagination.current_page - 1)
+          }
+        }
+      },
       computed: {
+        isStartOfPage() {
+          return this.pagination.prev_page_url === null;
+        },
+        isEndOfPage() {
+          return this.pagination.next_page_url === null;
+        },
         pageArray(){
           var current = this.pagination.current_page,
             last = this.pagination.last_page,
