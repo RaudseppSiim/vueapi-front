@@ -7,8 +7,8 @@
         </p>
       </header>
       <div class="card-image">
-        <figure class="image is-4by3">
-          <img :src="'https://picsum.photos/200/300/?blur&random&id=' + post.id" alt="Placeholder image">
+        <figure class="image is-4by3" v-if="post.images">
+          <img :src="post.images[0].src" alt="Placeholder image">
         </figure>
       </div>
       <div class="card-content">
