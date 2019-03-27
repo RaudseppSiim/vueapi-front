@@ -32,5 +32,11 @@ export default class Service {
     arguments[0] = this.getUrl(url);
     return this.api.$delete(...arguments);
   }
-
+  page(page){
+    return this.get('', {
+      params:{
+        page: page
+      }
+    })
+  }
 }

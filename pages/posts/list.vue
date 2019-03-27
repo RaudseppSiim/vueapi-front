@@ -2,8 +2,11 @@
   <div class="columns is-centered">
     <div class="column is-5">
       <pagination :pagination="$store.state.posts.pagination" @paging="loadPage" :delta="1">
-        <list-table :objects="$store.state.posts.list" :keys="tableKeys" :actions="actions"></list-table>
+        <list-table @edit="edit" :objects="$store.state.posts.list" :keys="tableKeys" :actions="actions"></list-table>
       </pagination>
+      <modal v-if="modalActive" :modal="editModal">
+        <post-form></post-form>
+      </modal>
     </div>
   </div>
 </template>
@@ -11,9 +14,11 @@
 <script>
     import ListTable from "../../components/listTable";
     import Pagination from "../../components/pagination";
+    import Modal from "../../components/modal";
+    import PostForm from "../../components/forms/post";
     export default {
         name: "list",
-      components: {Pagination, ListTable},
+      components: {PostForm, Modal, Pagination, ListTable},
       data(){
           return {
             tableKeys: [
@@ -28,9 +33,20 @@
         this.$store.dispatch('posts/loadPostPage', 1);
       },
       methods: {
-          loadPage(page){
-            this.$store.dispatch('posts/loadPostPage', page);
-          }
+        loadPage(page) {
+          this.$store.dispatch('posts/loadPostPage', page);
+        },
+        edit(id){
+          this.$store.dispatch('posts/toggleModal', 'edit');
+        }
+      },
+      computed: {
+          modalActive(){
+            return this.$store.state.posts.modal.edit.active;
+          },
+        editModal(){
+          return this.$store.state.posts.modal.edit;
+        }
       }
     }
 </script>

@@ -4,7 +4,21 @@ export const state = () => ({
     current_page:0,
     last_page:0
   },
-  isLoading: false
+  isLoading: false,
+  modal: {
+    edit: {
+      active: false,
+      title: 'Edit Post',
+      closeAction: 'posts/ToggleModal',
+      saveAction: 'posts/savePost',
+      name: 'edit',
+      id: 0,
+      data: {
+        title: '',
+        content: ''
+      }
+    }
+  }
 });
 
 export const mutations = {
@@ -19,16 +33,18 @@ export const mutations = {
   },
   TOGGLE_IS_LOADING(state){
     state.isLoading = !state.isLoading;
+  },
+  TOGGLE_MODAL(state, key){
+    state.modal[key].active = !state.modal[key].active;
+  },
+  SET_MODAL_DATA(state, data){
+    state.modal[data.modal].data[data.key] = data.value;
   }
 };
 export const actions = {
   loadNextPosts(context) {
     context.commit('TOGGLE_IS_LOADING');
-    this.$api.get('posts', {
-      params:{
-        page: context.state.pagination.current_page + 1
-      }
-    }).then((response)=>{
+    this.$api.posts.page(context.state.pagination.current_page + 1).then((response)=>{
       context.commit('ADD_POSTS', response.data);
       delete response.data;
       context.commit('SET_PAGINATION', response);
@@ -37,16 +53,18 @@ export const actions = {
   },
   loadPostPage(context, page) {
     context.commit('TOGGLE_IS_LOADING');
-    this.$api.get('posts', {
-      params:{
-        page: page
-      }
-    }).then((response)=>{
+    this.$api.posts.page(page).then((response)=>{
       context.commit('SET_POSTS', response.data);
       delete response.data;
       context.commit('SET_PAGINATION', response);
       context.commit('TOGGLE_IS_LOADING');
     });
+  },
+  toggleModal(context, key) {
+    context.commit('TOGGLE_MODAL', key);
+  },
+  setFormData(context, data){
+    context.commit('SET_MODAL_DATA', data)
   }
 };
 export const getters = {

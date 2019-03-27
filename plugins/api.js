@@ -1,5 +1,5 @@
-import Service from "../services/service";
+import ServiceContainer from "../services/serviceContainer";
 
 export default ({ app }, inject) => {
-  inject('api', new Service(app.$axios))
+  inject('api', new ServiceContainer(app.$axios))
 }
