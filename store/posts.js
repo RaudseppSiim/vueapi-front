@@ -24,7 +24,7 @@ export const mutations = {
 export const actions = {
   loadNextPosts(context) {
     context.commit('TOGGLE_IS_LOADING');
-    this.$axios.$get('posts', {
+    this.$api.get('posts', {
       params:{
         page: context.state.pagination.current_page + 1
       }
@@ -37,7 +37,7 @@ export const actions = {
   },
   loadPostPage(context, page) {
     context.commit('TOGGLE_IS_LOADING');
-    this.$axios.$get('posts', {
+    this.$api.get('posts', {
       params:{
         page: page
       }

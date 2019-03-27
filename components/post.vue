@@ -13,7 +13,7 @@
       </div>
       <div class="card-content">
         <div class="content">
-          <p>{{post.content}}</p>
+          <p v-html="post.content.split('\n').join('<br>')"></p>
           <a href="#">#css</a> <a href="#">#responsive</a>
           <br>
           <time :datetime="$moment(post.created_at).format()">{{$moment(post.created_at).fromNow()}}</time>
