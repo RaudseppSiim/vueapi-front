@@ -8,8 +8,8 @@ export const state = () => ({
   modal: {
     edit: {
       active: false,
-      title: 'Edit Post',
-      closeAction: 'posts/ToggleModal',
+      title: 'Create Post',
+      closeAction: 'posts/toggleModal',
       saveAction: 'posts/savePost',
       name: 'edit',
       id: 0,
@@ -39,6 +39,9 @@ export const mutations = {
   },
   SET_MODAL_DATA(state, data){
     state.modal[data.modal].data[data.key] = data.value;
+  },
+  UPDATE_MODAL(state, data){
+    state.modal[data.modal] = {...state.modal[data.modal], ...data }
   }
 };
 export const actions = {
@@ -63,8 +66,23 @@ export const actions = {
   toggleModal(context, key) {
     context.commit('TOGGLE_MODAL', key);
   },
+  setModalData(context, data) {
+    context.commit('UPDATE_MODAL', {
+      modal: data.modal,
+      id: data.id,
+      title: 'Edit Post',
+      data: Object.assign({}, context.state.list.filter((el)=> el.id == data.id)[0])
+    });
+  },
   setFormData(context, data){
     context.commit('SET_MODAL_DATA', data)
+  },
+  savePost(context) {
+    let edit = context.state.modal.edit;
+    this.$api.posts.save(edit.id,edit.data).then((response)=>{
+      context.commit('TOGGLE_MODAL', 'edit');
+
+    });
   }
 };
 export const getters = {

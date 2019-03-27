@@ -38,6 +38,7 @@
         },
         edit(id){
           this.$store.dispatch('posts/toggleModal', 'edit');
+          this.$store.dispatch('posts/setModalData', {id:id, modal:'edit'});
         }
       },
       computed: {

@@ -39,4 +39,7 @@ export default class Service {
       }
     })
   }
+  save(id,data){
+    return this.post(id, data);
+  }
 }
