@@ -42,6 +42,9 @@ export const mutations = {
   },
   UPDATE_MODAL(state, data){
     state.modal[data.modal] = {...state.modal[data.modal], ...data }
+  },
+  SET_POST(state, payload){
+    state.list.splice(payload.index, 1, payload.data);
   }
 };
 export const actions = {
@@ -81,7 +84,9 @@ export const actions = {
     let edit = context.state.modal.edit;
     this.$api.posts.save(edit.id,edit.data).then((response)=>{
       context.commit('TOGGLE_MODAL', 'edit');
-
+      console.log(response);
+      let index = context.state.list.findIndex(el => el.id==response.id);
+      context.commit('SET_POST', {data:response, index: index});
     });
   }
 };
