@@ -2,7 +2,7 @@
   <div class="columns is-centered">
     <div class="column is-5">
       <pagination :pagination="$store.state.posts.pagination" @paging="loadPage" :delta="1">
-        <list-table @edit="edit" :objects="$store.state.posts.list" :keys="tableKeys" :actions="actions"></list-table>
+        <list-table @edit="edit" @delete="remove" :objects="$store.state.posts.list" :keys="tableKeys" :actions="actions"></list-table>
       </pagination>
       <modal v-if="modalActive" :modal="editModal">
         <post-form></post-form>
@@ -19,6 +19,9 @@
     export default {
         name: "list",
       components: {PostForm, Modal, Pagination, ListTable},
+      mounted() {
+        console.log(this.$store);
+      },
       data(){
           return {
             tableKeys: [
@@ -39,6 +42,10 @@
         edit(id){
           this.$store.dispatch('posts/toggleModal', 'edit');
           this.$store.dispatch('posts/setModalData', {id:id, modal:'edit'});
+        },
+        remove(id){
+          this.$store.dispatch('posts/deletePost', id);
+
         }
       },
       computed: {

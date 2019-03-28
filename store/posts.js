@@ -45,6 +45,9 @@ export const mutations = {
   },
   SET_POST(state, payload){
     state.list.splice(payload.index, 1, payload.data);
+  },
+  REMOVE_POST(state, index){
+    state.list.splice(index, 1);
   }
 };
 export const actions = {
@@ -87,6 +90,12 @@ export const actions = {
       console.log(response);
       let index = context.state.list.findIndex(el => el.id==response.id);
       context.commit('SET_POST', {data:response, index: index});
+    });
+  },
+  deletePost(context,id) {
+    this.$api.posts.remove(id).then((response)=>{
+      let index = context.state.list.findIndex(el => el.id==id);
+      context.dispatch('loadPostPage', context.state.pagination.current_page);
     });
   }
 };

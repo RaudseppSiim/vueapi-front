@@ -42,4 +42,7 @@ export default class Service {
   save(id,data){
     return this.post(id, data);
   }
+  remove(id){
+    return this.delete(id);
+  }
 }
