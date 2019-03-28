@@ -10,7 +10,7 @@ export const state = () => ({
       active: false,
       title: 'Create Post',
       closeAction: 'posts/toggleModal',
-      saveAction: 'posts/savePost',
+      saveAction: 'posts/createPost',
       name: 'edit',
       id: 0,
       data: {
@@ -73,12 +73,24 @@ export const actions = {
     context.commit('TOGGLE_MODAL', key);
   },
   setModalData(context, data) {
-    context.commit('UPDATE_MODAL', {
-      modal: data.modal,
-      id: data.id,
-      title: 'Edit Post',
-      data: Object.assign({}, context.state.list.filter((el)=> el.id == data.id)[0])
-    });
+    if(data.id){
+      context.commit('UPDATE_MODAL', {
+        modal: data.modal,
+        id: data.id,
+        title: 'Edit Post',
+        data: Object.assign({}, context.state.list.filter((el)=> el.id == data.id)[0]),
+        saveAction: 'posts/savePost'
+      });
+    } else {
+      context.commit('UPDATE_MODAL', {
+        modal: 'edit',
+        id: 0,
+        title: 'Create Post',
+        data: {},
+        saveAction: 'posts/createPost'
+      });
+    }
+
   },
   setFormData(context, data){
     context.commit('SET_MODAL_DATA', data)
@@ -96,6 +108,14 @@ export const actions = {
     this.$api.posts.remove(id).then((response)=>{
       let index = context.state.list.findIndex(el => el.id==id);
       context.dispatch('loadPostPage', context.state.pagination.current_page);
+    });
+  },
+  createPost(context){
+    let edit = context.state.modal.edit;
+    this.$api.posts.create(edit.data).then((response)=>{
+      context.commit('TOGGLE_MODAL', 'edit');
+      let pagination = context.state.pagination;
+        context.dispatch('loadPostPage', context.state.pagination.current_page);
     });
   }
 };

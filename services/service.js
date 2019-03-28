@@ -45,4 +45,7 @@ export default class Service {
   remove(id){
     return this.delete(id);
   }
+  create(data){
+    return this.put('', data);
+  }
 }

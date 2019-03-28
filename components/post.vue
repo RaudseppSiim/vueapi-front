@@ -6,8 +6,8 @@
           {{post.title}}
         </p>
       </header>
-      <div class="card-image">
-        <figure class="image is-4by3" v-if="post.images">
+      <div class="card-image" v-if="post.images.length">
+        <figure class="image is-4by3">
           <img :src="post.images[0].src" alt="Placeholder image">
         </figure>
       </div>

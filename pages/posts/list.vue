@@ -1,6 +1,7 @@
 <template>
   <div class="columns is-centered">
     <div class="column is-5">
+      <button class="button" @click="newPost">Add</button>
       <pagination :pagination="$store.state.posts.pagination" @paging="loadPage" :delta="1">
         <list-table @edit="edit" @delete="remove" :objects="$store.state.posts.list" :keys="tableKeys" :actions="actions"></list-table>
       </pagination>
@@ -46,6 +47,10 @@
         remove(id){
           this.$store.dispatch('posts/deletePost', id);
 
+        },
+        newPost(){
+          this.$store.dispatch('posts/toggleModal', 'edit');
+          this.$store.dispatch('posts/setModalData', {modal:'edit'});
         }
       },
       computed: {
