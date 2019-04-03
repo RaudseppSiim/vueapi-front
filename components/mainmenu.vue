@@ -4,6 +4,33 @@
       <div class="navbar-start">
         <nuxt-link v-for="link in links" class="navbar-item" :to="link.link" :class="{'is-active': routeActive(link.link)}">{{link.title}}</nuxt-link>
       </div>
+      <div class="navbar-end" >
+        <div class="navbar-item" v-if="!$store.state.auth.token">
+          <div class="buttons">
+            <nuxt-link to="/auth/register" class="button is-primary">
+              <strong>Sign up</strong>
+            </nuxt-link>
+            <nuxt-link to="/auth/login" class="button is-light">
+              Log in
+            </nuxt-link>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable" v-if="$store.state.auth.token">
+          <a class="navbar-link">
+            {{$store.state.auth.user.name}}
+          </a>
+
+          <div class="navbar-dropdown is-right">
+            <a class="navbar-item">
+              Profile
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" @click="$store.dispatch('auth/logout')">
+              Logout
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </nav>
 </template>

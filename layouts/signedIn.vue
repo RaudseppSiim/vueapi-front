@@ -11,6 +11,6 @@
   import MainMenu from "../components/mainmenu";
   export default {
     components: {MainMenu},
-    middleware:['signedOut']
+    middleware:['signedIn']
   }
 </script>

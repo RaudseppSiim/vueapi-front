@@ -21,6 +21,9 @@ export const mutations = {
   },
   SET_TOKEN(state, token){
     state.token = token;
+  },
+  SET_USER(state, user){
+    state.user = user;
   }
 };
 export const actions = {
@@ -29,7 +32,30 @@ export const actions = {
   },
   login(context){
     this.$api.service.post('login', context.state.forms.login).then((resp) => {
-      context.commit('SET_TOKEN', resp.token);
+      window.localStorage.setItem('token', resp.token);
+      context.dispatch('auth/setToken', resp.token);
+      this.$router.go({ path: '/posts' })
+    });
+  },
+  setToken(context, token){
+    context.commit('SET_TOKEN', token);
+    this.$axios.setToken(token, 'Bearer');
+    this.$api.service.get('user').then((resp) => {
+      context.commit('SET_USER', resp.user);
+    });
+  },
+  logout(context){
+    context.commit('SET_USER', {});
+    window.localStorage.removeItem('token');
+    context.commit('SET_TOKEN', '');
+    this.$router.go({ path: '/' })
+  },
+  register(context){
+    this.$api.service.post('register', context.state.forms.register).then((resp) => {
+      window.localStorage.setItem('token', resp.token);
+      context.dispatch('auth/setToken', resp.token);
+      context.commit('SET_USER', resp.user);
+      this.$router.go({ path: '/posts' })
     });
   }
 };

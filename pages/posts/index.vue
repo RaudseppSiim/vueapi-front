@@ -10,7 +10,8 @@
     import PostList from "../../components/postList";
     export default {
         name: "posts",
-      components: {PostList}
+      components: {PostList},
+      layout: 'signedIn'
     }
 </script>
 

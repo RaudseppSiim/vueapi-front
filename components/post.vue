@@ -19,6 +19,11 @@
           <time :datetime="$moment(post.created_at).format()">{{$moment(post.created_at).fromNow()}}</time>
         </div>
       </div>
+      <footer class="card-footer">
+        <a class="card-footer-item" :class="{'has-text-danger': liked}" @click="doLike"><i class="fas fa-heart"></i></a>
+        <a class="card-footer-item" :class="{'has-text-danger': disliked}" @click="doDislike"><i class="fas fa-heart-broken is-danger"></i></a>
+        <a class="card-footer-item"><i class="fas fa-comment"></i></a>
+      </footer>
     </div>
   </div>
 </template>
@@ -27,6 +32,22 @@
     export default {
         name: "post",
       props: ['post'],
+      data(){
+          return {
+            liked: false,
+            disliked: false
+          }
+      },
+      methods: {
+          doLike(){
+            this.liked = !this.liked;
+            this.disliked = false;
+          },
+          doDislike(){
+            this.disliked = !this.disliked;
+            this.liked = false;
+          }
+      }
     }
 </script>
 
