@@ -117,7 +117,43 @@ export const actions = {
       let pagination = context.state.pagination;
         context.dispatch('loadPostPage', context.state.pagination.current_page);
     });
-  }
+  },
+  likePost(context, postId){
+    let post = context.state.list.filter((el)=> el.id == postId)[0];
+    let call;
+    if(!post.is_liked){
+      call = this.$api.posts.like(postId);
+    } else {
+      call = this.$api.posts.unlike(postId);
+    }
+    call.then( response =>{
+      let index = context.state.list.findIndex(el => el.id==response.id);
+      context.commit('SET_POST', {data:response, index: index});
+    });
+  },
+  dislikePost(context, postId){
+    let post = context.state.list.filter((el)=> el.id == postId)[0];
+    let call;
+    if(!post.is_disliked){
+      call = this.$api.posts.dislike(postId);
+    } else {
+      call = this.$api.posts.undislike(postId);
+    }
+    call.then( response =>{
+      let index = context.state.list.findIndex(el => el.id==response.id);
+      context.commit('SET_POST', {data:response, index: index});
+    });
+  },
+  // unlikePost(context, postId){
+  //   this.$api.posts.like(postId).then((response)=>{
+  //
+  //   });
+  // },
+  // undislikePost(context, postId){
+  //   this.$api.posts.like(postId).then((response)=>{
+  //
+  //   });
+  // },
 };
 export const getters = {
 
