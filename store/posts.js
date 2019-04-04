@@ -1,4 +1,5 @@
 export const state = () => ({
+  single: null,
   list: [],
   pagination: {
     current_page:0,
@@ -48,6 +49,9 @@ export const mutations = {
   },
   REMOVE_POST(state, index){
     state.list.splice(index, 1);
+  },
+  SET_SINGLE_POST(state, post){
+    state.single = post;
   }
 };
 export const actions = {
@@ -144,6 +148,19 @@ export const actions = {
       context.commit('SET_POST', {data:response, index: index});
     });
   },
+  getPost(context, postId){
+    let posts = context.state.list;
+    if(posts.length){
+      let index = context.state.list.findIndex(el => el.id==postId);
+      if(index){
+        context.commit('SET_SINGLE_POST', posts[index]);
+        return;
+      }
+    }
+    this.$api.posts.get(postId).then(resp => {
+      context.commit('SET_SINGLE_POST', resp);
+    });
+  }
   // unlikePost(context, postId){
   //   this.$api.posts.like(postId).then((response)=>{
   //
