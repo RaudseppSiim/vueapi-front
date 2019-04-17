@@ -58,6 +58,9 @@ export const mutations = {
   },
   SET_COMMENT_TEXT(state, value){
     state.comment.text = value;
+  },
+  ADD_COMMENT(state, value){
+    state.single.comments.push(value);
   }
 };
 export const actions = {
@@ -186,6 +189,9 @@ export const actions = {
       context.commit('SET_SINGLE_POST', resp);
       context.dispatch('pollComments', postId);
     });
+  },
+  addComment(context, comment){
+    context.commit('ADD_COMMENT', comment);
   }
 };
 export const getters = {
