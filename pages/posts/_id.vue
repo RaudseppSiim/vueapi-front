@@ -24,6 +24,11 @@
 </template>
 
 <script>
+  var faker = require('faker');
+  import Post from "../../components/post";
+  import Comment from "../../components/Comment";
+  import CommentForm from "../../components/forms/comment";
+  import CommentList from "../../components/CommentList";
     export default {
         name: "_id",
       components: {CommentList, CommentForm, Comment, Post},
