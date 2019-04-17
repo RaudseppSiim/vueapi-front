@@ -21,7 +21,12 @@
       layout: 'signedIn',
       created() {
         this.$store.dispatch('posts/getPost', this.$route.params.id);
-        this.$store.dispatch('posts/pollComments', this.$route.params.id);
+        // this.$store.dispatch('posts/pollComments', this.$route.params.id);
+        this.$echo.channel('comments')
+          .listen('NewComment', (e) => {
+            this.$store.dispatch('posts/addComment', e.comment);
+            console.log(e);
+          });
       },
       computed: {
           post(){
