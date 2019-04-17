@@ -6,6 +6,9 @@ export const state = () => ({
     last_page:0
   },
   isLoading: false,
+  comment: {
+    text: "",
+  },
   modal: {
     edit: {
       active: false,
@@ -52,6 +55,9 @@ export const mutations = {
   },
   SET_SINGLE_POST(state, post){
     state.single = post;
+  },
+  SET_COMMENT_TEXT(state, value){
+    state.comment.text = value;
   }
 };
 export const actions = {
@@ -160,17 +166,27 @@ export const actions = {
     this.$api.posts.get(postId).then(resp => {
       context.commit('SET_SINGLE_POST', resp);
     });
+  },
+  postComment(context) {
+    console.log("postComment");
+    this.$api.posts.comment(context.state.single.id, context.state.comment.text).then(resp => {
+      context.commit('SET_COMMENT_TEXT', '');
+      context.commit('SET_SINGLE_POST', resp);
+    });
+  },
+  setCommentText(context, value){
+    context.commit('SET_COMMENT_TEXT', value);
+  },
+  pollComments(context, postId){
+    let length = 0;
+    if(context.state.single) {
+      length = context.state.single.comments.length;
+    }
+    this.$api.posts.pollComments(postId, length).then(resp => {
+      context.commit('SET_SINGLE_POST', resp);
+      context.dispatch('pollComments', postId);
+    });
   }
-  // unlikePost(context, postId){
-  //   this.$api.posts.like(postId).then((response)=>{
-  //
-  //   });
-  // },
-  // undislikePost(context, postId){
-  //   this.$api.posts.like(postId).then((response)=>{
-  //
-  //   });
-  // },
 };
 export const getters = {
 
