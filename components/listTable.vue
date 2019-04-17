@@ -7,7 +7,7 @@
     <tbody>
     <tr v-for="object in objects">
       <td v-for="key in keys">{{object[key.key]}}</td>
-      <td><div class="columns"><div v-for="action in actions" class="column"><button @click="$emit(action.title.toLowerCase(), object.id)" class="button" :class="action.color">{{action.title}}</button></div></div></td>
+      <td><div class="columns"><div v-for="action in actions" class="column"><button @click="$emit(action.title.toLowerCase(), object)" class="button" :class="action.color">{{action.title}}</button></div></div></td>
     </tr>
     </tbody>
   </table>
