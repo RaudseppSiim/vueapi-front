@@ -20,6 +20,7 @@
     import PostForm from "../../components/forms/post";
     export default {
         name: "list",
+      layout: 'signedIn',
       components: {PostForm, Modal, Pagination, ListTable},
       mounted() {
         console.log(this.$store);
