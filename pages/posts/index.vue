@@ -8,9 +8,11 @@
 
 <script>
     import PostList from "../../components/postList";
+    import PostModal from "../../components/PostModal";
     export default {
         name: "posts",
-      components: {PostList}
+      components: {PostModal, PostList},
+      layout: 'signedIn'
     }
 </script>
 

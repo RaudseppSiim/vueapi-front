@@ -21,7 +21,9 @@ export default {
       { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.8.1/css/all.css' },
     ]
   },
-
+  router: {
+    middleware: ['auth']
+  },
   /*
   ** Customize the progress-bar color
   */
@@ -39,6 +41,7 @@ export default {
   */
   plugins: [
     '@/plugins/scrollDirective',
+    '@/plugins/echo',
     '@/plugins/api',
   ],
 
