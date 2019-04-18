@@ -1,24 +1,9 @@
 <template>
-  <div class="section">
-    <div class="card">
-      <header class="card-header">
-        <p class="card-header-title">
-          {{post.title}}
-        </p>
-      </header>
-      <div class="card-image" v-if="post.images.length">
-        <figure class="image is-4by3">
-          <img :src="post.images[0].src" alt="Placeholder image">
-        </figure>
-      </div>
-      <div class="card-content">
-        <div class="content">
-          <p v-html="post.content.split('\n').join('<br>')"></p>
-          <a href="#">#css</a> <a href="#">#responsive</a>
-          <br>
-          <time :datetime="$moment(post.created_at).format()">{{$moment(post.created_at).fromNow()}}</time>
-        </div>
-      </div>
+  <div class="columns is-centered">
+    <div v-if="post" class="column is-5">
+      <post :post="post" ></post>
+      <comment-form></comment-form>
+      <comment-list :comments="post.comments"></comment-list>
     </div>
   </div>
 </template>
