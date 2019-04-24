@@ -19,7 +19,7 @@ import Messagelist from "./messageList";
         height: 460px;
         width: 305px;
         border-radius: 15px;
-        background-color: gray;
+        border: 1px solid #3273dc;
         display: flex;
         flex-direction: column;
     }

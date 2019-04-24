@@ -1,5 +1,5 @@
 <template>
-  <a class="feedback">
+  <a class="feedback" @click="$store.dispatch('modal/toggleChat');">
     Click to Chat
   </a>
 </template>

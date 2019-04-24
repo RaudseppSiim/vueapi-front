@@ -1,7 +1,7 @@
 <template>
     <div class="chat-area">
       <chatbutton></chatbutton>
-      <chatroom></chatroom>
+      <chatroom v-show="this.$store.state.modal.modal"></chatroom>
     </div>
 </template>
 
@@ -10,7 +10,10 @@ import chatroom from './chatroom.vue'
 import Chatbutton from "./Chatbutton";
     export default {
         name: "chatarea",
-      components: {Chatbutton,  chatroom}
+      components: {Chatbutton,  chatroom},
+      created(){
+        
+      }
     }
 </script>
 

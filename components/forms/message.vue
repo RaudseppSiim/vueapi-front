@@ -1,8 +1,8 @@
 <template>
     <div>
         <form class="form-area">
-            <input class="message" placeholder="message" type="text">
-            <input style="display:none" type="submit">
+            <input class="message" v-model="messageText" placeholder="message" type="text">
+            <input style="display:none" @click.stop.prevent="submit()" type="submit">
         </form>
     </div>
 </template>
@@ -10,7 +10,15 @@
 <script>
     export default {
         name: "message-form",
+        data(){
+            return{
+                messageText:""
+            }
+        },
         methods: {
+            submit(){
+            this.messageText=""
+        }
            
         },
       computed: {
@@ -20,10 +28,9 @@
 
 <style scoped>
     .message{
-            width: 90%;
+        width: 90%;
         margin-left: 15px;
         margin-bottom: 15px;
-        
         padding: 5px;
         border-radius: 25px;
         border:1px solid #3273dc;
