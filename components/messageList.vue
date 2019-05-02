@@ -8,7 +8,14 @@
     import Message from "./message";
     export default {
         name: "Messagelist",
-      components: {Message}
+      components: {Message},
+      created(){
+          this.$echo.channel('messages')
+          .listen('App\Events\NewMessage', (e) => {
+            console.log(e);
+          });
+      }
+      
     }
 </script>
 
