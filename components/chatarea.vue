@@ -1,7 +1,7 @@
 <template>
     <div class="chat-area">
       <chatbutton></chatbutton>
-      <chatroom v-show="this.$store.state.modal.modal"></chatroom>
+      <chatroom v-show="this.$store.state.messages.modal"></chatroom>
     </div>
 </template>
 

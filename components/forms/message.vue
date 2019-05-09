@@ -17,8 +17,13 @@
         },
         methods: {
             submit(){
-            this.messageText=""
-        }
+                this.$api.service.sendMessage(this.messageText).then(Response => {
+                    console.log(Response);
+                })
+                var message = {content: this.messageText, user:{name:this.$store.state.auth.user.name}}
+                this.$store.dispatch('messages/addMessages',message);
+                this.messageText=""
+            }
            
         },
       computed: {

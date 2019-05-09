@@ -1,5 +1,5 @@
 <template>
-  <a class="feedback" @click="$store.dispatch('modal/toggleChat');">
+  <a :class="{'feedback':true,'feedback-active':this.$store.state.messages.modal}" @click="$store.dispatch('messages/toggleChat');">
     Click to Chat
   </a>
 </template>
@@ -17,5 +17,9 @@
     padding: 10px 20px;
     border-radius: 50px;
     border-color: #46b8da;
+  }
+  .feedback-active{
+    position: absolute;
+    top: -2.5em;
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="message-list">
-      <message :sender="$store.state.auth.user.name" message="Ma olen jaanus!"></message>
+      <message v-for="(item,index) in this.$store.state.messages.messages" :key="index" :sender="item.user.name" :message="item.content"></message>
     </div>
 </template>
 
@@ -9,10 +9,16 @@
     export default {
         name: "Messagelist",
       components: {Message},
+      data(){
+        return {
+          messages:[]
+        }
+      },
       created(){
-          this.$echo.channel('messages')
-          .listen('App\Events\NewMessage', (e) => {
+          this.$echo.channel('message')
+          .listen('NewMessage', (e) => {
             console.log(e);
+            this.$store.dispatch('messages/addMessages',e.message);
           });
       }
       
@@ -21,7 +27,8 @@
 
 <style scoped>
     .message-list{
-        height: 98%;
-        padding: 10px;
+      overflow-y:auto;
+      height: 98%;
+      padding: 10px;
     }
 </style>
