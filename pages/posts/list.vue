@@ -3,7 +3,7 @@
     <div class="column is-5">
       <button class="button" @click="newPost">Add</button>
       <pagination :pagination="$store.state.posts.pagination" @paging="loadPage" :delta="1">
-        <list-table @edit="edit" @delete="remove" @view="view" :objects="$store.state.posts.list" :keys="tableKeys" :actions="actions"></list-table>
+        <list-table @edit="edit" @delete="remove" :objects="$store.state.posts.list" :keys="tableKeys" :actions="actions"></list-table>
       </pagination>
       <modal v-if="modalActive" :modal="editModal">
         <post-form></post-form>
@@ -32,7 +32,7 @@
               {key: 'title', title: 'Title'},
               {key: 'created_at', title: 'Creation date'}
               ],
-            actions: [{title:'View', color:'is-light'},{title:'Edit', color:'is-primary'}, {title:'Delete', color:'is-danger'}],
+            actions: [{title:'Edit', color:'is-primary'}, {title:'Delete', color:'is-danger'}],
           }
       },
       created() {
@@ -42,28 +42,13 @@
         loadPage(page) {
           this.$store.dispatch('posts/loadPostPage', page);
         },
-        edit(object){
+        edit(id){
           this.$store.dispatch('posts/toggleModal', 'edit');
-          this.$store.dispatch('posts/setModalData', {id:obect.id, modal:'edit'});
+          this.$store.dispatch('posts/setModalData', {id:id, modal:'edit'});
         },
-        remove(object){
-          this.$store.dispatch('posts/deletePost', object.id);
+        remove(id){
+          this.$store.dispatch('posts/deletePost', id);
 
-        },
-        view(object){
-          
-         this.$router.addRoutes([{
-                path: '/post/'+object.id,
-                name: 'post-id'+object.id,
-                component: Post,
-                props: (route) => ({
-                    post: object,
-                    ...route.params
-                })
-            }])
-          this.$router.push({
-            name: 'post-id'+object.id
-        });
         },
         newPost(){
           this.$store.dispatch('posts/toggleModal', 'edit');
